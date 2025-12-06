@@ -23,7 +23,7 @@ func LoadRoutes() {
 	newCache := make(map[string]*models.Route)
 	for _, r := range routesList {
 		if r.Enabled {
-			key := r.Method + " " + r.Path
+			key := r.Method + r.Path
 			newCache[key] = &r
 		}
 	}
@@ -38,7 +38,7 @@ func LoadRoutes() {
 func GetRoute(method, path string) *models.Route {
 	mu.RLock()
 	defer mu.RUnlock()
-	key := method + " " + path
+	key := method + path
 	return routeCache[key]
 }
 

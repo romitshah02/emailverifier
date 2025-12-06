@@ -44,9 +44,7 @@ func initDB() *gorm.DB {
 		log.Fatalf("Failed to ping database: %v", err)
 	}
 
-	if err := db.AutoMigrate(&models.Route{}); err != nil {
-		log.Printf("AutoMigrate failed: %v", err)
-	}
+	db.AutoMigrate(&models.Route{})
 
 	return db
 }

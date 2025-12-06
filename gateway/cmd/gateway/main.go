@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"gateway/internal/db"
+	"gateway/internal/gateway"
 	"gateway/internal/routes"
 	"log"
 
@@ -19,6 +20,10 @@ func main() {
 	db.Init()
 	r := gin.Default()
 	routes.RegisterRoutes(r)
+
+	proxy := r.Group("/proxy")
+	proxy.Any("/*path", gateway.ProxyHandler)
+	gateway.StartRouteWatcher()
 
 	r.Run(":8080")
 
